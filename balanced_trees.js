@@ -23,7 +23,32 @@ const Tree = () =>{
             return tree
         },
         implementTree(treeTemplate){
-            this.root = this.makeTree(treeTemplate)
+            const filteredTreeInput = treeTemplate.sort((a, b) => a - b).filter((item, index, self) => self.indexOf(item) == index)
+            this.root = this.makeTree(filteredTreeInput)
+        },
+        insertNode(value){
+          let currentTree = this.root
+          let prev = null
+          const newNode = Node(value, null, null)
+          
+          while(currentTree != null){
+            prev = currentTree
+            if(value > currentTree.data){
+              currentTree = currentTree.right
+            }
+            else{
+              currentTree = currentTree.left
+            }
+          }
+          if(value < prev.data ){
+            prev.left = newNode
+          }
+          else{
+            prev.right = newNode
+          }
+        },
+        removeNode(value){
+
         }
     }
 }
@@ -45,6 +70,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 myTree.implementTree([1,2])
 
-// console.log(myTree.root)
+for (let i = 0; i < 10; i++) {
+  myTree.insertNode(10 + i)  
+}
 
 prettyPrint(myTree.root)
