@@ -88,6 +88,23 @@ const Tree = () =>{
           }
         }
 
+      },
+      find(value){
+        let current = this.root
+        let prev = null
+
+        while(current){
+          prev = current
+
+          if(value > current.data){
+            current = current.right
+          }
+          else{
+            current = current.left
+          }
+        }
+
+        return prev.data || 'No such node'
       }
   }
 }
@@ -118,4 +135,4 @@ myTree.insertNode(0.1)
 myTree.removeNode(2)
 
 prettyPrint(myTree.root)
-// console.log(myTree.root)
+console.log(myTree.find(14))
