@@ -57,21 +57,34 @@ const Tree = () =>{
           if(value > currentTree.data){
             currentTree = currentTree.right
           }
-          else{
+          if(value < currentTree.data){
             currentTree = currentTree.left
           }
 
-
           if(currentTree.data == value){
+            if(currentTree.left && !currentTree.right){
+              if(prev.data > value) prev.left = currentTree.left
+              if (prev.data < value) prev.right = currentTree.left
 
-            if(!currentTree.left && !currentTree.right) {
-              if(value > prev.data){
-                prev.right = null
-              }
-              else{
-                prev.left = null
-              }
+              return
             }
+            if(prev.data > value) prev.left = currentTree.right
+            if (prev.data < value) prev.right = currentTree.right
+
+            let replacementNode = currentTree.right;
+            let replacementParent = currentTree;
+            while (replacementNode.left) {
+                replacementParent = replacementNode;
+                replacementNode = replacementNode.left;
+            }
+            currentTree.data = replacementNode.data;
+            if (replacementParent.left === replacementNode) {
+                replacementParent.left = replacementNode.right;
+            } else {
+                replacementParent.right = replacementNode.right;
+            }
+
+            return 
           }
         }
 
@@ -100,7 +113,9 @@ for (let i = 0; i < 10; i++) {
 myTree.insertNode(10 + i)  
 }
 
-myTree.removeNode(19)
+myTree.insertNode(0.1)  
+
+myTree.removeNode(2)
 
 prettyPrint(myTree.root)
-console.log(myTree.root)
+// console.log(myTree.root)
