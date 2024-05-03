@@ -217,11 +217,11 @@ const Tree = () =>{
         const leftNode = this.height(root.left)
         const rightNode = this.height(root.right)
 
-        return Math.abs(leftNode - rightNode)  <= 1 && this.isBalanced(root.left) && this.isBalanced(root.left)
+        return Math.abs(leftNode - rightNode)  <= 1 && this.isBalanced(root.left) && this.isBalanced(root.right)
 
       },
       reBalance(){
-        
+        this.implementTree(this.inOrder())
       }
   }
 }
@@ -241,14 +241,26 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-myTree.implementTree([1,2,3,4,5,6,7])
+let randomNumbersArray = [
+  12,
+  32, 54, 76, 98, 21, 43, 65, 87, 9, 31,
+  53, 75, 97, 19, 41, 63, 85, 7, 29, 51,
+  73, 95, 17, 39, 61, 83, 5, 27, 49, 71
+];
 
-// myTree.insertNode(10)
-// myTree.insertNode(11)
-// myTree.insertNode(12)
-// myTree.insertNode(13)
+myTree.implementTree(randomNumbersArray)
 
+for (let i = 0; i < 20; i++) {
+  myTree.insertNode(101 + i)
+  
+}
+
+
+myTree.reBalance()
 
 prettyPrint(myTree.root)
 
 console.log(myTree.isBalanced(myTree.root))
+console.log(myTree.inOrder())
+console.log(myTree.preOrder())
+console.log(myTree.postOrder())
