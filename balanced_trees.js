@@ -196,10 +196,22 @@ const Tree = () =>{
 
       },
       height(node){
+        if(node.left == null && node.right == null) return 1
 
+        return Math.max(this.height(node.left), this.height(node.right)) + 1
       },
-      depth(node){
+      depth(node, root = this.root, depth){
+        if(root == null) return -1
+        if(root.data == node.data) return depth
 
+        const leftNode = this.depth(node, root.left, depth + 1)
+        const rightNode = this.depth(node, root.right, depth + 1)
+
+        if(leftNode == -1 && rightNode != -1) return rightNode
+
+        return leftNode 
+
+        // return Math.max(leftNode, rightNode)
       },
       isBalanced(){
 
@@ -230,4 +242,4 @@ myTree.implementTree([10, 20, 30, 100, 150, 200, 300])
 
 prettyPrint(myTree.root)
 
-console.log(myTree.postOrder())
+console.log(myTree.depth(myTree.root.right.right, myTree.root, 1))
