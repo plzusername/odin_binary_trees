@@ -152,10 +152,47 @@ const Tree = () =>{
 
         return list
       },
-      preOrder(callBack){
+      preOrder(root = this.root, callBack = null, list = []){
+        if (root === null) {
+          return;
+      }
+
+      if(callBack) callBack(root.data)
+
+      else{
+        list.push(root.data)
+      }
+
+      // First recur on left subtree
+      this.preOrder(root.left, callBack, list);
+     
+      // Now deal with the node      
+     
+      // Then recur on right subtree
+      this.preOrder(root.right, callBack, list);
+
+      return list
 
       },
-      postOrder(callBack){
+      postOrder(root = this.root, callBack = null, list = []){
+        if (root === null) {
+          return;
+      }
+      // First recur on left subtree
+      this.postOrder(root.left, callBack, list);
+     
+      // Now deal with the node      
+     
+      // Then recur on right subtree
+      this.postOrder(root.right, callBack, list);
+
+      if(callBack) callBack(root.data)
+
+      else{
+        list.push(root.data)
+      }
+
+      return list
 
       },
       height(node){
@@ -188,9 +225,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-myTree.implementTree([1,2,3, 4, 5, 6, 7])
+myTree.implementTree([10, 20, 30, 100, 150, 200, 300])
 
 
 prettyPrint(myTree.root)
 
-console.log(myTree.inOrder())
+console.log(myTree.postOrder())
