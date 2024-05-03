@@ -105,6 +105,70 @@ const Tree = () =>{
         }
 
         return prev.data || 'No such node'
+      },
+      levelOrder(callBack){
+        const nodes = [this.root]
+        const output = [this.root]
+        while(nodes.length != 0){
+          const currentNode = nodes[0]
+
+          const leftNode = currentNode.left
+          const rightNode = currentNode.right
+
+          if(leftNode) nodes.push(leftNode)
+          if(rightNode) nodes.push(rightNode)
+
+          if(leftNode) output.push(leftNode)
+          if(rightNode) output.push(rightNode)
+
+          callBack(currentNode.data)
+
+          nodes.shift()
+          
+        }
+
+        return output.map(node => node.data)
+
+      },
+      inOrder(root = this.root, callBack = null, list = []){
+        if (root === null) {
+            return;
+        }
+
+        // First recur on left subtree
+        this.inOrder(root.left, callBack, list);
+       
+        // Now deal with the node
+
+        if(callBack) callBack(root.data)
+
+        else{
+          list.push(root.data)
+        }
+        
+       
+        // Then recur on right subtree
+        this.inOrder(root.right, callBack, list);
+
+        return list
+      },
+      preOrder(callBack){
+
+      },
+      postOrder(callBack){
+
+      },
+      height(node){
+
+      },
+      depth(node){
+
+      },
+      isBalanced(){
+
+      },
+      reBalance(){
+        
       }
   }
 }
@@ -124,15 +188,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-myTree.implementTree([1,2])
+myTree.implementTree([1,2,3, 4, 5, 6, 7])
 
-for (let i = 0; i < 10; i++) {
-myTree.insertNode(10 + i)  
-}
-
-myTree.insertNode(0.1)  
-
-myTree.removeNode(2)
 
 prettyPrint(myTree.root)
-console.log(myTree.find(14))
+
+console.log(myTree.inOrder())
